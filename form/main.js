@@ -39,7 +39,7 @@ btn.addEventListener("mouseout", (e) => {
   });
 });
 */
-//validation
+/*validation
 const myForm = document.querySelector("#my-form");
 const nameInput = document.querySelector("#name");
 const emailInput = document.querySelector("#email");
@@ -72,6 +72,7 @@ function onSubmit(e) {
     emailInput.value = " ";
   }
 }
+*/
 
 //Task -10
 
@@ -81,4 +82,14 @@ function saveToLocalStorage(event) {
 
   localStorage.setItem("name", name);
   localStorage.setItem("email", email);
+
+  //Task -11
+  const obj = {
+    name,
+    email,
+  };
+  localStorage.setItem("userDetails", JSON.stringify(obj));
+
+  let user = [];
+  let users = JSON.parse(localStorage.getItem("list")) || [];
 }
