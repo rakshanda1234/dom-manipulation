@@ -109,36 +109,35 @@ window.addEventListener("DOMContentLoaded", () => {
 //Task -12
 
 function showNewUserOnScreen(user) {
-  console.log("user", user);
   const parentNode = document.getElementById("listOfUsers");
   const childHTML = `<li id=${user.email}>${user.name} - ${user.email}
-  <button onClick=deleteUser(${user.email})>Delete</button>
-  <button onClick=editUserDetails(${user.email}, ${user.name})>Edit</button>
+  <button onClick=deleteUser("${user.email}")>Delete</button>
+  <button onClick=editUserDetails("${user.email}","${user.name}")>Edit</button>
   </li>`;
-  console.log("childHTML", childHTML);
+
   parentNode.innerHTML = parentNode.innerHTML + childHTML;
 }
 
 //Edit User
-
-//deleteUser('abc@gmail.com')
-
 function editUserDetails(emailId, name) {
   document.getElementById("email").value = emailId;
   document.getElementById("name").value = name;
 
   deleteUser(emailId);
 }
-
+//deleteUser('abc@gmail.com')
 function deleteUser(emailId) {
   console.log(emailId);
   localStorage.removeItem(emailId);
-  removeUserFromSreen(emailId);
+  removeUserFromScreen(emailId);
 }
 
-function removeUserFromSreen(emailId) {
+function removeUserFromScreen(emailId) {
   const parentNode = document.getElementById("listOfUsers");
   const childNodeToBeDeleted = document.getElementById(emailId);
 
   parentNode.removeChild(childNodeToBeDeleted);
+  if (childNodeToBeDeleted) {
+    parentNode.removeChild(childNodeToBeDeleted);
+  }
 }
