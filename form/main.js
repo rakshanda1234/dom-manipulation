@@ -77,19 +77,68 @@ function onSubmit(e) {
 //Task -10
 
 function saveToLocalStorage(event) {
+  event.preventDefault();
   const name = event.target.name.value;
   const email = event.target.email.value;
 
-  localStorage.setItem("name", name);
-  localStorage.setItem("email", email);
+  // localStorage.setItem("name", name);
+  // localStorage.setItem("email", email);
 
   //Task -11
   const obj = {
     name,
     email,
   };
-  localStorage.setItem("userDetails", JSON.stringify(obj));
 
-  let user = [];
-  let users = JSON.parse(localStorage.getItem("list")) || [];
+  localStorage.setItem(obj.email, JSON.stringify(obj));
+  showNewUserOnScreen(obj);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const localStorageObj = localStorage;
+  const localstoragekeys = Object.keys(localStorageObj);
+
+  for (var i = 0; i < localstoragekeys.length; i++) {
+    const key = localstoragekeys[i];
+    const userDetailsString = localStorageObj[key];
+    const userDetailsObj = JSON.parse(userDetailsString);
+    showNewUserOnScreen(userDetailsObj);
+  }
+});
+
+//Task -12
+
+function showNewUserOnScreen(user) {
+  console.log("user", user);
+  const parentNode = document.getElementById("listOfUsers");
+  const childHTML = `<li id=${user.email}>${user.name} - ${user.email}
+  <button onClick=deleteUser(${user.email})>Delete</button>
+  <button onClick=editUserDetails(${user.email}, ${user.name})>Edit</button>
+  </li>`;
+  console.log("childHTML", childHTML);
+  parentNode.innerHTML = parentNode.innerHTML + childHTML;
+}
+
+//Edit User
+
+//deleteUser('abc@gmail.com')
+
+function editUserDetails(emailId, name) {
+  document.getElementById("email").value = emailId;
+  document.getElementById("name").value = name;
+
+  deleteUser(emailId);
+}
+
+function deleteUser(emailId) {
+  console.log(emailId);
+  localStorage.removeItem(emailId);
+  removeUserFromSreen(emailId);
+}
+
+function removeUserFromSreen(emailId) {
+  const parentNode = document.getElementById("listOfUsers");
+  const childNodeToBeDeleted = document.getElementById(emailId);
+
+  parentNode.removeChild(childNodeToBeDeleted);
 }
